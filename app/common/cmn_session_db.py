@@ -21,13 +21,11 @@ def conn_db():
         なし
     Returns:
         conn: DB接続オブジェクト
+        cursor: DBカーソル
     Note:
     """
 
     # DB接続設定
-
-
-
     config = {
       'user': setting.DB_USER,               # MySQLのユーザー名
       'password': setting.DB_PASS,           # MySQLのパスワード
@@ -37,8 +35,9 @@ def conn_db():
 
     try:
         conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
         print(f"{cmn_msg.INFO_MSG}DB接続しました。")
-        return conn
+        return conn, cursor
 
     except Exception as e:
         tb = traceback.format_exc()
@@ -46,18 +45,20 @@ def conn_db():
         raise Exception
 
 
-def disconn_db(conn):
+def disconn_db(conn, cursor):
     """
     DBと切断する
 
     Args:
         conn: DB接続オブジェクト
+        cursor: DBカーソル
     Returns:
         なし
     Note:
     """
 
     try:
+        cursor.close()
         conn.close()
         print(f"{cmn_msg.INFO_MSG}DB切断しました。")
 

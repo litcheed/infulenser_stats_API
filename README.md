@@ -16,3 +16,6 @@ pwd
 python app/tools/csv_to_db.py app/tools/csv/t_influencer_posts_202401121334.csv
 ```
 
+docker build -t api-image .
+docker run  --rm -it api-image /bin/bash
+

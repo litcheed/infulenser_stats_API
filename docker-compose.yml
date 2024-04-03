@@ -1,0 +1,14 @@
+services:
+  python:
+    build: .
+    depends_on:
+      - db
+    command: python app/API_all_stats.py
+
+  db:
+    image: mysql:8.3.0
+    environment:
+      MYSQL_DATABASE: mydatabase
+      MYSQL_ROOT_PASSWORD: influencers_posts
+    ports:
+      - "3306:3306"

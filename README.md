@@ -16,7 +16,8 @@
 
 ### CSVデータをDBへ格納するツール実行手順(初回のみ実行)
 
-1. "\infulenser_stats_API\app\tools\csv"配下にcsvデータを配置
+1. tools配下にcsvフォルダを生成し、そこにcsvデータを配置<br>
+"\infulenser_stats_API\app\tools\csv\t_influencer_posts_202401121334.csv"
 
 <br>
 
@@ -93,7 +94,7 @@ curl 'http://127.0.0.1:8000/content/top-nouns?top_n=5' -H 'accept: application/j
 ### テスト実行
 上記手順2まで完了したら下記コマンドを入力
 ```
-pytest --anyio-backends=asyncio -s app/test_main_api.py
+pytest -s app/test_main_api.py
 ```
 <br>
 <br>

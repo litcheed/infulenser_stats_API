@@ -37,6 +37,7 @@ def import_csv_to_mysql(csv_file_path):
 
     # CSVファイルの読み込み
     df = pd.read_csv(csv_file_path)
+    
     # NaN値をNoneに置換
     df = df.where(pd.notnull(df), None)
 

@@ -21,13 +21,15 @@ docker run  --rm -it api-image /bin/bash
 
 
 
-nohup uvicorn app.main_api:app --reload > uvicorn.log 2>&1 &
+curl -X 'GET' 'http://127.0.0.1:8000/stats/average-likes-comments' -H 'accept: application/json' -w "\n"
+curl -X 'GET' 'http://127.0.0.1:8000/influencers/top-by-likes?top_n=5' -H 'accept: application/json' -w "\n"
 
-実行中プロセス確認
-jobs
+curl -X 'GET' 'http://127.0.0.1:8000/influencers/top-by-comments?top_n=5' -H 'accept: application/json' -w "\n"
+curl -X 'GET' 'http://127.0.0.1:8000/content/top-nouns?top_n=5' -H 'accept: application/json' -w "\n"
 
-ジョブ番号確認
-ps
 
-ジョブの停止
-kill ジョブ番号
+
+
+
+テスト実行
+pytest -s app/test_main_api.py

@@ -67,25 +67,25 @@ docker exec -it infulenser_stats_api-python-1 bash
 
 - 平均いいね数、平均コメント数を取得するAPI
 ```
-curl -X 'GET' 'http://127.0.0.1:8000/stats/average-likes-comments' -H 'accept: application/json' -w "\n"
+curl 'http://127.0.0.1:8000/stats/average-likes-comments' -H 'accept: application/json' -w "\n"
 ```
 <br>
 
 - 平均いいね数の多いインフルエンサー上位N件を取得するAPI
 ```
-curl -X 'GET' 'http://127.0.0.1:8000/influencers/top-by-likes?top_n=5' -H 'accept: application/json' -w "\n"
+curl 'http://127.0.0.1:8000/influencers/top-by-likes?top_n=5' -H 'accept: application/json' -w "\n"
 ```
 <br>
 
 - 平均コメント数の多いインフルエンサー上位N件を取得するAPI
 ```
-curl -X 'GET' 'http://127.0.0.1:8000/influencers/top-by-comments?top_n=5' -H 'accept: application/json' -w "\n"
+curl 'http://127.0.0.1:8000/influencers/top-by-comments?top_n=5' -H 'accept: application/json' -w "\n"
 ```
 <br>
 
 - textカラムに頻出の名詞上位N件を取得するAPI
 ```
-curl -X 'GET' 'http://127.0.0.1:8000/content/top-nouns?top_n=5' -H 'accept: application/json' -w "\n"
+curl 'http://127.0.0.1:8000/content/top-nouns?top_n=5' -H 'accept: application/json' -w "\n"
 ```
 <br>
 <br>
@@ -93,7 +93,7 @@ curl -X 'GET' 'http://127.0.0.1:8000/content/top-nouns?top_n=5' -H 'accept: appl
 ### テスト実行
 上記手順2まで完了したら下記コマンドを入力
 ```
-pytest -s app/test_main_api.py
+pytest --anyio-backends=asyncio -s app/test_main_api.py
 ```
 <br>
 <br>
@@ -102,12 +102,14 @@ pytest -s app/test_main_api.py
 
 **app**
 <br>
-　全ソースコードを格納
+　全ソースコードを格納<br>
+・main_api.py : webAPIメインファイル<br>
+・test_main_api.py : webAPIテストファイル
 <br>
 
 **app/common**
 <br>
-　共通関数や共通変数ファイルを格納
+　共通関数や共通変数ファイルを格納。ファイル詳細はcommon内のcmn_list.mdを参照
 <br>
 
 **app/setting**
@@ -117,5 +119,10 @@ pytest -s app/test_main_api.py
 
 **app/tools**
 <br>
-　CSVデータをDBへ格納するツール関連
+　CSVデータをRDBへ格納するツール関連
+<br>
+
+**app/tools/csv**
+<br>
+　ここにRDBに保存したいCSVデータを配置する
 <br>

@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+#################################################################
+#
+# 概要:APIテストファイル
+#      1️⃣平均いいね数、平均コメント数を取得するAPI
+#      2️⃣平均いいね数の多いインフルエンサー上位N件を取得するAPI
+#      3️⃣平均コメント数の多いインフルエンサー上位N件を取得するAPI
+#      4️⃣textカラムに頻出の名詞上位N件を取得するAPI
+#
+#################################################################
 
 import sys
 sys.path.append("/usr/src/python/app")
@@ -7,6 +17,9 @@ from httpx import AsyncClient, ASGITransport
 
 from main_api import app
 
+
+
+# 1️⃣平均いいね数、平均コメント数を取得するAPI
 @pytest.mark.trio
 async def test_get_counts_good_cmnt():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
@@ -16,6 +29,9 @@ async def test_get_counts_good_cmnt():
     assert "average_comments" in response.json()
     print("test_get_counts_good_cmnt passed")
 
+
+
+# 2️⃣平均いいね数の多いインフルエンサー上位N件を取得するAPI
 @pytest.mark.trio
 async def test_get_ave_good_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
@@ -24,6 +40,9 @@ async def test_get_ave_good_topN():
     assert len(response.json()) <= 5
     print("test_get_ave_good_topN passed")
 
+
+
+# 3️⃣平均コメント数の多いインフルエンサー上位N件を取得するAPI
 @pytest.mark.trio
 async def test_get_ave_cmnt_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
@@ -32,6 +51,9 @@ async def test_get_ave_cmnt_topN():
     assert len(response.json()) <= 5
     print("test_get_ave_cmnt_topN passed")
 
+
+
+# 4️⃣textカラムに頻出の名詞上位N件を取得するAPI
 @pytest.mark.trio
 async def test_get_noun_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:

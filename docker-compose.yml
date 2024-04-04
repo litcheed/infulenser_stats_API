@@ -3,7 +3,7 @@ services:
     build: .
     depends_on:
       - db
-    command: python app/API_all_stats.py
+    command: uvicorn app.main_api:app --reload
 
   db:
     image: mysql:8.3.0

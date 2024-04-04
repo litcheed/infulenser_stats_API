@@ -1,3 +1,17 @@
+# 目次
+
+- [目次](#目次)
+- [準備](#準備)
+    - [CSVデータをDBへ格納するツール実行手順(初回のみ実行)](#csvデータをdbへ格納するツール実行手順初回のみ実行)
+- [メインAPI](#メインapi)
+    - [API実行](#api実行)
+    - [テスト実行](#テスト実行)
+- [ディレクトリ・ファイル詳細](#ディレクトリファイル詳細)
+---
+
+<br>
+<br>
+
 # 準備
 
 ### CSVデータをDBへ格納するツール実行手順(初回のみ実行)
@@ -31,7 +45,9 @@ python app/tools/csv_to_db.py app/tools/csv/t_influencer_posts_202401121334.csv
 <br>
 <br>
 
-# API実行
+# メインAPI
+
+### API実行
 
 1. ターミナルからビルド実行
 ```
@@ -74,8 +90,32 @@ curl -X 'GET' 'http://127.0.0.1:8000/content/top-nouns?top_n=5' -H 'accept: appl
 <br>
 <br>
 
-## テスト実行
+### テスト実行
 上記手順2まで完了したら下記コマンドを入力
 ```
 pytest -s app/test_main_api.py
 ```
+<br>
+<br>
+
+# ディレクトリ・ファイル詳細
+
+**app**
+<br>
+　全ソースコードを格納
+<br>
+
+**app/common**
+<br>
+　共通関数や共通変数ファイルを格納
+<br>
+
+**app/setting**
+<br>
+　共通設定ファイルを格納
+<br>
+
+**app/tools**
+<br>
+　CSVデータをDBへ格納するツール関連
+<br>

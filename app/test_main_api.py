@@ -7,7 +7,7 @@ from httpx import AsyncClient, ASGITransport
 
 from main_api import app
 
-@pytest.mark.anyio
+@pytest.mark.trio
 async def test_get_counts_good_cmnt():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.get("/stats/average-likes-comments")
@@ -16,7 +16,7 @@ async def test_get_counts_good_cmnt():
     assert "average_comments" in response.json()
     print("test_get_counts_good_cmnt passed")
 
-@pytest.mark.anyio
+@pytest.mark.trio
 async def test_get_ave_good_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.get("/influencers/top-by-likes?top_n=5")
@@ -24,7 +24,7 @@ async def test_get_ave_good_topN():
     assert len(response.json()) <= 5
     print("test_get_ave_good_topN passed")
 
-@pytest.mark.anyio
+@pytest.mark.trio
 async def test_get_ave_cmnt_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.get("/influencers/top-by-comments?top_n=5")
@@ -32,7 +32,7 @@ async def test_get_ave_cmnt_topN():
     assert len(response.json()) <= 5
     print("test_get_ave_cmnt_topN passed")
 
-@pytest.mark.anyio
+@pytest.mark.trio
 async def test_get_noun_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.get("/content/top-nouns?top_n=5")

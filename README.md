@@ -58,13 +58,13 @@ python app/tools/csv_to_db.py app/tools/csv/t_influencer_posts_202401121334.csv
 
 ### API実行
 
-1. ターミナルからビルド実行
+1. ターミナルからdocker-compose up実行 ("準備 2."でビルド完了済み想定。ビルドがまだの場合は"準備 2."のように--build付与)
 ```
-docker-compose up --build
+docker-compose up
 ```
 <br>
 
-2. ビルド完了後、起動したコンテナは閉じないまま別ターミナルを開きpythonコンテナのbash環境にアクセス
+2. 起動完了後、起動したコンテナは閉じないまま別ターミナルを開きpythonコンテナのbash環境にアクセス
 ```
 docker exec -it infulenser_stats_api-python-1 bash
 ```

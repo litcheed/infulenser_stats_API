@@ -25,11 +25,11 @@
 ```
 docker-compose up --build
 ```
-下記のような出力がされたらmysqlコンテナビルド完了<br>
+※下記のような出力がされたらmysqlコンテナビルド完了<br>
 ```
 infulenser_stats_api-db-1      | 2024-04-05T10:29:05.748103Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.3.0'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
 ```
-下記のような出力がされたらpythonコンテナビルド完了<br>
+※下記のような出力がされたらpythonコンテナビルド完了<br>
 ```
 infulenser_stats_api-python-1  | INFO:     Application startup complete.
 ```
@@ -47,7 +47,7 @@ pwd
 ```
 <br>
 
-5. CSVデータをDBへ格納するツール実行()
+5. CSVデータをDBへ格納するツール実行
 ```
 python app/tools/csv_to_db.py app/tools/csv/t_influencer_posts_202401121334.csv
 ```

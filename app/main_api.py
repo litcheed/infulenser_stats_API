@@ -12,12 +12,9 @@
 import re
 import sys
 sys.path.append("/usr/src/python/app")
-import nltk
+import spacy
 
-from typing import List, Dict
 from fastapi import FastAPI, Query
-from nltk.tokenize import word_tokenize
-from nltk import pos_tag
 from collections import Counter
 
 from common import cmn_msg
@@ -36,9 +33,8 @@ app = FastAPI()
 # 指定したいテーブル名
 table_name = setting.DB_TABLE_NAME
 
-# nltkリソースのダウンロード
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+# spaCyの日本語モデルをロード
+nlp = spacy.load("ja_core_news_sm")
 
 
 
@@ -293,28 +289,27 @@ async def get_noun_topN(top_n: int = Query(default=10, alias='top_n')):
 
         # 名詞のカウント
         noun_counts = Counter()
-        for text_tuple in results:
-            text = text_tuple[0]
 
-            # textがNoneであればスキップ
-            if text is not None:
-                # テキストをトークンに分割
-                tokens = word_tokenize(text)
-                # トークンに品詞タグ付与
-                tagged_tokens = pos_tag(tokens)
+        # フィルタリング用正規表現パターン
+        regex_pattern = re.compile(r'\b\w{2,}\b')
 
-            # フィルタリング用正規表現
-            pattern = re.compile(r'^\W$|^\d$|^_$|^\s+$|^\u3000+$|^\u200B+$')
+        for text in results:
+            # textがNoneでないことを確認
+            if text[0] is not None:
+                # テキストをspaCyで処理
+                doc = nlp(text[0])
+                # 名詞を抽出してカウント
+                for token in doc:
+                    # 名詞であり、正規表現にマッチするかのチェック
+                    if token.pos_ == 'NOUN' and regex_pattern.match(token.text):
+                        noun_counts[token.lemma_] += 1  # カウント
 
-            # 名詞をカウント
-            for word, tag in tagged_tokens:
-                # 名詞の品詞タグは 'NN'。正規表現によるフィルタリングも行う。
-                if tag.startswith('NN') and not pattern.match(word):
-                    noun_counts[word] += 1
+                # 頻出名詞の上位N件を取得
+                most_common_nouns = noun_counts.most_common(top_n)
 
-        # 上位N件を取得
-        result = [{"noun": noun, "count": count} for noun, count in noun_counts.most_common(top_n)]
-    
+                # 結果を整形
+                result = [{"noun": noun, "count": count} for noun, count in most_common_nouns]
+
     except Exception as e:
         print(f"{cmn_msg.WARN_MSG}実行結果の整形に失敗しました。\n{e}")
     
@@ -334,3 +329,4 @@ async def get_noun_topN(top_n: int = Query(default=10, alias='top_n')):
     # 結果出力
     #---------------#
     return result
+    

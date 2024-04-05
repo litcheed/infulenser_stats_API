@@ -19,6 +19,10 @@ from main_api import app
 
 
 
+# クエリパラメータ設定
+query_param = 5
+
+
 # 1️⃣平均いいね数、平均コメント数を取得するAPI
 @pytest.mark.trio
 async def test_get_counts_good_cmnt():
@@ -35,9 +39,11 @@ async def test_get_counts_good_cmnt():
 @pytest.mark.trio
 async def test_get_ave_good_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        response = await ac.get("/influencers/top-by-likes?top_n=5")
+        response = await ac.get(f"/influencers/top-by-likes?top_n={query_param}")
+    # ステータスコード確認
     assert response.status_code == 200
-    assert len(response.json()) <= 5
+    # レスポンス数確認
+    assert len(response.json()) == query_param
     print("test_get_ave_good_topN passed")
 
 
@@ -46,9 +52,11 @@ async def test_get_ave_good_topN():
 @pytest.mark.trio
 async def test_get_ave_cmnt_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        response = await ac.get("/influencers/top-by-comments?top_n=5")
+        response = await ac.get(f"/influencers/top-by-comments?top_n={query_param}")
+    # ステータスコード確認
     assert response.status_code == 200
-    assert len(response.json()) <= 5
+    # レスポンス数確認
+    assert len(response.json()) == query_param
     print("test_get_ave_cmnt_topN passed")
 
 
@@ -57,7 +65,9 @@ async def test_get_ave_cmnt_topN():
 @pytest.mark.trio
 async def test_get_noun_topN():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        response = await ac.get("/content/top-nouns?top_n=5")
+        response = await ac.get(f"/content/top-nouns?top_n={query_param}")
+    # ステータスコード確認
     assert response.status_code == 200
-    assert len(response.json()) <= 5
+    # レスポンス数確認
+    assert len(response.json()) == query_param
     print("test_get_noun_topN passed")

@@ -21,9 +21,17 @@
 
 <br>
 
-2. ターミナルからビルド実行
+2. ターミナルからビルド実行(初回起動時は時間がかかるため注意)
 ```
 docker-compose up --build
+```
+下記のような出力がされたらmysqlコンテナビルド完了<br>
+```
+infulenser_stats_api-db-1      | 2024-04-05T10:29:05.748103Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.3.0'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+```
+下記のような出力がされたらpythonコンテナビルド完了<br>
+```
+infulenser_stats_api-python-1  | INFO:     Application startup complete.
 ```
 <br>
 
